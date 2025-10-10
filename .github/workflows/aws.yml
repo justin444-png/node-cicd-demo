@@ -6,9 +6,8 @@ on:
       - main
 
 env:
-  AWS_REGION: ap-south-1        # Your AWS region
-  EB_APP_NAME: node-cicd-demo   # Your Elastic Beanstalk Application name
-  EB_ENV_NAME: Node-cicd-demo-env  # Your Elastic Beanstalk Environment name
+  AWS_REGION: ap-south-1             # Your AWS region
+  EB_ENV_NAME: Node-cicd-demo-env    # Your Elastic Beanstalk Environment name
 
 permissions:
   contents: read
@@ -43,7 +42,5 @@ jobs:
 
     - name: Deploy to Elastic Beanstalk
       run: |
-        # Initialize EB (only if needed)
-        eb init ${{ env.EB_APP_NAME }} --region ${{ env.AWS_REGION }} --platform node.js || true
-        # Deploy to specific environment
+        # Deploy to existing environment
         eb deploy ${{ env.EB_ENV_NAME }}
