@@ -6,9 +6,8 @@ on:
       - main
 
 env:
-  AWS_REGION: ap-south-1
-  EB_APP_NAME: Node-cicd-demo
-  EB_ENV_NAME: Node-cicd-demo-env
+  AWS_REGION: ap-south-1             # Your AWS region
+  EB_ENV_NAME: Node-cicd-demo-env    # Your Elastic Beanstalk Environment name
 
 permissions:
   contents: read
@@ -41,13 +40,7 @@ jobs:
         pip install awsebcli --upgrade --user
         echo "$HOME/.local/bin" >> $GITHUB_PATH
 
-    - name: Initialize EB CLI
-      run: |
-        eb init ${{ env.EB_APP_NAME }} \
-          --region ${{ env.AWS_REGION }} \
-          --platform node.js \
-          --interactive=false
-
     - name: Deploy to Elastic Beanstalk
       run: |
+        # Deploy to existing environment (reads from .elasticbeanstalk/config.yml)
         eb deploy ${{ env.EB_ENV_NAME }}
